@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 const createUser = (req: Request, res: Response) => {
     res.send('STUB: Register user');
-    // {"user":{"email":"{{EMAIL}}", "password":"{{PASSWORD}}", "username":"{{USERNAME}}"}}
+    // Also needs to set a token - reference the "Login and Remember Token" tests
 };
 
 const loginUser = (req: Request, res: Response) => {
@@ -10,7 +10,7 @@ const loginUser = (req: Request, res: Response) => {
     // {"user":{"email":"{{EMAIL}}", "password":"{{PASSWORD}}"}}
 };
 
-const getLoggedInUser = (req: Request, res: Response) => {
+const getCurrentUser = (req: Request, res: Response) => {
     res.send('STUB: Get currently logged in user');
     // {"user":{"email":"{{EMAIL}}", "password":"{{PASSWORD}}"}}
 };
@@ -20,4 +20,4 @@ const updateUser = (req: Request, res: Response) => {
     // {"user":{"email":"{{EMAIL}}"}}
 };
 
-export { createUser, loginUser, getLoggedInUser, updateUser };
+export { createUser, loginUser, getCurrentUser, updateUser };
