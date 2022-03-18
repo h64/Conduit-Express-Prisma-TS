@@ -1,7 +1,7 @@
 {
     "name": "ts-express-prisma-realworld-backend",
     "version": "1.0.0",
-    "description": "",
+    "description": "A Conduit clone adhering to the Realworld API spec",
     "main": "index.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
