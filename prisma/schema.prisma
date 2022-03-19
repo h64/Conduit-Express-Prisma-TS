@@ -11,20 +11,23 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  email         String
-  token         String
-  username      String
-  bio           String?
-  image         String?
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  email     String
+  token     String
+  username  String
+  bio       String?
+  image     String?
+  Article   Article[]
 }
 
 model Article {
-  id            Int       @id @default(autoincrement())
-  slug          String
-  title         String
-  description   String?
-  tags          String[]
+  id          Int      @id @default(autoincrement())
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+  slug        String
+  title       String
+  description String?
+  tags        String[]
 }
