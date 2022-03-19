@@ -1,8 +1,20 @@
 import { Request, Response } from 'express';
+import { PrismaClient } from '@prisma/client';
 
-const createUser = (req: Request, res: Response) => {
-    res.send('STUB: Register user');
-    // Also needs to set a token - reference the "Login and Remember Token" tests
+const prisma = new PrismaClient();
+
+const createUser = async (req: Request, res: Response) => {
+    const { email, password, username } = req.body.user;
+
+    const newUser = await prisma.user.create({
+        data: {
+            email,
+            token: password,
+            username,
+        },
+    });
+
+    res.json({ user: newUser });
 };
 
 const loginUser = (req: Request, res: Response) => {
