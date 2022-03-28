@@ -6,9 +6,13 @@ import {
     updateUser,
 } from '../controllers/users';
 
+import {
+    validateNewUser
+} from '../middleware/validateInput'
+
 const router = Router();
 
-router.post('/users', createUser);
+router.post('/users', validateNewUser, createUser);
 router.post('/users/login', loginUser);
 router.get('/user', getCurrentUser);
 router.put('/user', updateUser);
