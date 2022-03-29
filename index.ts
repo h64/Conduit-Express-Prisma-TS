@@ -4,6 +4,7 @@ import cors from 'cors'
 
 import userRoutes from './routes/users';
 import articleRoutes from './routes/articles';
+import errorHandler from './middleware/errorHandler'
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -17,6 +18,8 @@ app.use(morgan('dev'))
 
 app.use('/api', userRoutes);
 app.use('/api/articles', articleRoutes);
+
+app.use(errorHandler)
 
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);

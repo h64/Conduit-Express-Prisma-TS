@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { hash, compare } from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-const createUser = async (req: Request, res: Response) => {
+const createUser: RequestHandler = async (req, res, next) => {
     const { email, password, username } = req.body.user;
 
     const saltRounds = 10;
@@ -29,14 +29,11 @@ const createUser = async (req: Request, res: Response) => {
             },
         });
     } catch (err) {
-        console.log(err);
-        res.send({
-            msg: 'Failed to Register',
-        });
+        next(err);
     }
 };
 
-const loginUser = async (req: Request, res: Response) => {
+const loginUser: RequestHandler = async (req, res, next) => {
     const { email, password } = req.body.user;
     try {
         if (!email || !password) throw new Error('Missing inputs');
@@ -49,25 +46,22 @@ const loginUser = async (req: Request, res: Response) => {
 
         const match = await compare(password, foundUser?.password ?? '');
         if (!match) throw new Error('Invalid password');
-        
+
         const withoutPassword = { ...foundUser };
         delete withoutPassword.password;
 
         res.json({ user: withoutPassword });
     } catch (err) {
-        console.log(err);
-        res.json({
-            msg: 'Failed to Login',
-        });
+        next(err);
     }
 };
 
-const getCurrentUser = (req: Request, res: Response) => {
+const getCurrentUser: RequestHandler = (req, res) => {
     res.send('STUB: Get currently logged in user');
     // {"user":{"email":"{{EMAIL}}", "password":"{{PASSWORD}}"}}
 };
 
-const updateUser = (req: Request, res: Response) => {
+const updateUser: RequestHandler = (req, res) => {
     res.send('STUB: Update the logged in users email');
     // {"user":{"email":"{{EMAIL}}"}}
 };

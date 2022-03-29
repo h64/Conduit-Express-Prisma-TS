@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { RequestHandler } from 'express';
 
-const getArticles = (req: Request, res: Response) => {
+const getArticles:RequestHandler = (req, res) => {
     res.send('STUB: Get all articles');
     /*
         All Articles
@@ -14,23 +14,23 @@ const getArticles = (req: Request, res: Response) => {
     */
 };
 
-const showArticle = (req: Request, res: Response) => {
+const showArticle: RequestHandler = (req, res) => {
     res.send('STUB: Show one article');
 };
 
-const createArticle = (req: Request, res: Response) => {
+const createArticle: RequestHandler = (req, res) => {
     res.send('STUB: Create an article');
 };
 
-const updateArticle = (req: Request, res: Response) => {
+const updateArticle: RequestHandler = (req, res) => {
     res.send('STUB: Update an article');
 };
 
-const deleteArticle = (req: Request, res: Response) => {
+const deleteArticle: RequestHandler = (req, res) => {
     res.send('STUB: Delete an article');
 };
 
-const getFeed = (req: Request, res: Response) => {
+const getFeed: RequestHandler = (req, res) => {
     res.send('STUB: Get Feed');
 };
 

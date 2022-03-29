@@ -7,12 +7,12 @@ import {
 } from '../controllers/users';
 
 import {
-    validateNewUser
+    validateRegisterInput
 } from '../middleware/validateInput'
 
 const router = Router();
 
-router.post('/users', validateNewUser, createUser);
+router.post('/users', validateRegisterInput, createUser);
 router.post('/users/login', loginUser);
 router.get('/user', getCurrentUser);
 router.put('/user', updateUser);

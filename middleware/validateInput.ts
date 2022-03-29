@@ -1,16 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import isEmail from 'validator/lib/isEmail';
 import isStrongPassword from 'validator/lib/isStrongPassword';
 import isAlphaNumeric from 'validator/lib/isAlphanumeric';
 
-function validateNewUser(req: Request, res: Response, next: NextFunction) {
+const validateRegisterInput: RequestHandler = (req, res, next) => {
     const { email, password, username } = req.body.user;
-    console.log(email, password, username);
-    if (!isEmail(email)) {
-        return res.json({
-            msg: 'Invalid Email',
-        });
-    }
 
     /* Remove weakOptions in a real environment for stronger password validation */
     const weakOptions = {
@@ -19,20 +13,22 @@ function validateNewUser(req: Request, res: Response, next: NextFunction) {
         minNumbers: 0,
         minSymbols: 0,
     };
-
-    if (!isStrongPassword(password, weakOptions)) {
-        return res.json({
-            msg: 'Insufficient Password Strength',
-        });
+    console.log('validate middleware called');
+    try {
+        if (!email || !password || !username) {
+            throw new Error('Missing a form field');
+        } else if (!isEmail(email)) {
+            throw new Error('Invalid Email');
+        } else if (!isStrongPassword(password, weakOptions)) {
+            throw new Error('Insufficient Password Strength');
+        } else if (!isAlphaNumeric(username)) {
+            throw new Error('Invalid Username');
+        } else {
+            next();
+        }
+    } catch (err) {
+        next(err);
     }
+};
 
-    if (!isAlphaNumeric(username)) {
-        return res.json({
-            msg: 'Invalid Username',
-        });
-    }
-
-    next();
-}
-
-export { validateNewUser };
+export { validateRegisterInput };
